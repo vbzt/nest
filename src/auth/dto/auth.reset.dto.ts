@@ -7,5 +7,4 @@ export class AuthResetDTO{
 
   @IsJWT()
   token: string
-
 }
