@@ -12,14 +12,14 @@ export class AuthService{
                 private readonly prisma: PrismaService,
                 private readonly userService: UserService){}
 
-    async createToken( user: User ){ 
+   createToken( user: User ){ 
       return {
         accessToken: this.JWTService.sign( { 
           id: user.id, 
           name: user.name, 
           email: user.email 
         }, {
-          expiresIn: '3 seconds',
+          expiresIn: '7 days',
           subject: String(user.id),
           issuer: 'login',
           audience: 'users'
@@ -27,9 +27,9 @@ export class AuthService{
       }
     }
 
-    async checkToken(token: string){ 
+   checkToken(token: string){ 
       try {
-        const userInfo = await this.JWTService.verify(token, { 
+        const userInfo = this.JWTService.verify(token, { 
           audience: 'users',
           issuer: 'login'
         })
@@ -37,6 +37,15 @@ export class AuthService{
         return userInfo
       } catch (error) {
         throw new BadRequestException(error)
+      }
+    }
+
+   isValidToken(token: string){ 
+      try {
+        this.checkToken(token)
+        return true
+      } catch (error) {
+        return false 
       }
     }
 
