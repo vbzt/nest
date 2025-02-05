@@ -5,8 +5,12 @@ import { UpdatePatchtUserDto } from "./dto/update-patch-dto";
 import { UserService } from "./user.service";
 import { LogInterceptor } from "src/interceptors/log.interceptor";
 import { ParamId } from "src/decorators/param.id.decorator";
+import { Roles } from "src/decorators/roles.decorator";
+import { Role } from "src/enums/role.enum";
 
 @Controller('users')
+@UseInterceptors(LogInterceptor)
+@Roles(Role.Admin)
 export class UserController { 
 
   constructor(private readonly userService: UserService){
