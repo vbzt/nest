@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Put, UseGuards, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Patch, Post, Put, UseGuards, UseInterceptors } from "@nestjs/common";
 import { CreateUserDTO } from "./dto/create-user.dto";
 import { UpdatePutUserDto } from "./dto/update-put-user.dto";
 import { UpdatePatchtUserDto } from "./dto/update-patch-dto";
@@ -9,6 +9,7 @@ import { Roles } from "src/decorators/roles.decorator";
 import { Role } from "src/enums/role.enum";
 import { RoleGuard } from "src/guards/role.guard";
 import { AuthGuard } from "src/guards/auth.guard";
+import { SkipThrottle } from "@nestjs/throttler";
 
 
 @Roles(Role.Admin)
@@ -26,6 +27,7 @@ export class UserController {
     return this.userService.create( data )
   }
   
+  // @SkipThrottle() 
   @Get()
   async read(){ 
     return this.userService.read()

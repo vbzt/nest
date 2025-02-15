@@ -8,7 +8,7 @@ import { AuthService } from "./auth.service";
 
 @Module({ 
   imports: [JwtModule.register({
-    secret: 'cWxlX15HR1oiUHlQM25gXVdjbmMxWG/Co2k3a0RCYkY5QTVkfnMxUzw2RHBha0hhfVs2', 
+    secret: process.env.JWT_SECRET
     
     }),
     forwardRef(() => UserModule),
